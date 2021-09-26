@@ -5,10 +5,10 @@
 ; Last Modified: 12/19/2020
 ; Email address: stoneroll6@gmail.com
 ; Description: This program showcases low-level procedures using
-;			   macros (mGetString and mDisplayString) 
-;              and string primitives (ReadVal and WriteVal),
-;			   receiving 10 input signed integers and
-;			   displaying their sum and average.
+;		macros (mGetString and mDisplayString) 
+;         	and string primitives (ReadVal and WriteVal),
+;		receiving 10 input signed integers and
+;		displaying their sum and average.
 ;
 ;----------------------------------------------------------------------------------------------
 
@@ -30,13 +30,13 @@ mGetString MACRO some_prompt, some_memory, max_length, str_length
 	pushad
 
 	mov		EDX, some_prompt
-	call 	WriteString
+	call 		WriteString
 	
 	mov		EDX, some_memory						; will store in OFFSET
 	mov		ECX, max_length							; will set max chars
-	call 	ReadString								; number of chars in EAX
+	call 		ReadString							; number of chars in EAX
 	mov		EDI, str_length							; load OFFSET
-	mov		[EDI], EAX								; change value at OFFSET
+	mov		[EDI], EAX							; change value at OFFSET
 
 	popad
 
@@ -52,10 +52,10 @@ ENDM
 
 mDisplayString MACRO str_offset
 
-	push 	EDX
+	push 		EDX
 
 	mov		EDX, str_offset
-	call 	WriteString
+	call 		WriteString
 
 	pop		EDX
 
@@ -75,19 +75,19 @@ MAXSIZE		= 26									; max size of byte array for input
 
 intro1		BYTE	"Designing Low-Level I/O Procedures by Philip Beck",13,10,13,10,0
 intro2		BYTE	"Please provide 10 signed decimal integers.",13,10
-		 	BYTE	"Each number must be small enough to fit inside a 32 bit register.",13,10
-		 	BYTE	"The program will then display the input integers, their sum, ",13,10
-		 	BYTE	"and their average value.",13,10,13,10,0
+		BYTE	"Each number must be small enough to fit inside a 32 bit register.",13,10
+		BYTE	"The program will then display the input integers, their sum, ",13,10
+		BYTE	"and their average value.",13,10,13,10,0
 prompt		BYTE	"Please enter a signed number: ",0
 reprompt	BYTE	"ERROR: Not a signed number or too large a number.",13,10
-			BYTE	"Please try again: ",0
+		BYTE	"Please try again: ",0
 showAll		BYTE	"You entered the following numbers:",13,10,0
 showSum		BYTE	"The sum of these numbers is: ",0
 showAvg		BYTE	"The floor-rounded average is: ",0
 lastMsg		BYTE	"Thanks and goodbye.",13,10,0
 spacing		BYTE	", ",0
 
-numString	BYTE	MAXSIZE+1 DUP(?)				; +1 makes room for null char ReadString
+numString	BYTE	MAXSIZE+1 DUP(?)						; +1 makes room for null char ReadString
 revString	BYTE	MAXSIZE+1 DUP(?)
 stringLen	DWORD	?
 numArray	SDWORD	ARRAYSIZE DUP(?)
@@ -107,61 +107,61 @@ main PROC
 
 	;--------------------
 	; Prompt user to enter numbers
-	push	OFFSET average
-	push	OFFSET sum
-	push	ARRAYSIZE
-	push	OFFSET stringLen
-	push	MAXSIZE
-	push	OFFSET prompt								
-	push	OFFSET reprompt								
-	push	OFFSET numString							
-	push	OFFSET numArray								
-	push	OFFSET number								
-	call	ReadVal
+	push		OFFSET average
+	push		OFFSET sum
+	push		ARRAYSIZE
+	push		OFFSET stringLen
+	push		MAXSIZE
+	push		OFFSET prompt								
+	push		OFFSET reprompt								
+	push		OFFSET numString							
+	push		OFFSET numArray								
+	push		OFFSET number								
+	call		ReadVal
 
 	;--------------------
 	; Write the array as string
-	call	CrLf
-	mDisplayString OFFSET showAll
+	call		CrLf
+	mDisplayString 	OFFSET showAll
 	mov		ECX, ARRAYSIZE
 	mov		ESI, OFFSET numArray
 _showElement:
-	mov		EAX, [ESI]								; value in numArray[n]
+	mov		EAX, [ESI]							; value in numArray[n]
 	mov		number, EAX
-	push	OFFSET revString
-	push	OFFSET numString
-	push	OFFSET number
-	call	WriteVal
+	push		OFFSET revString
+	push		OFFSET numString
+	push		OFFSET number
+	call		WriteVal
 	add		ESI, TYPE SDWORD
 	cmp		ECX, 1
 	je		_writeSum
-	mDisplayString OFFSET spacing
-	loop	_showElement
+	mDisplayString 	OFFSET spacing
+	loop		_showElement
 
 	;--------------------
 	; Write the sum as string
 _writeSum:
-	call	CrLf
-	mDisplayString OFFSET showSum
-	push	OFFSET revString
-	push	OFFSET numString
-	push	OFFSET sum
-	call	WriteVal
+	call		CrLf
+	mDisplayString 	OFFSET showSum
+	push		OFFSET revString
+	push		OFFSET numString
+	push		OFFSET sum
+	call		WriteVal
 
 	;--------------------
 	; Write the average as string
-	call	CrLf
-	mDisplayString OFFSET showAvg
-	push	OFFSET revString
-	push	OFFSET numString
-	push	OFFSET average
-	call	WriteVal
+	call		CrLf
+	mDisplayString 	OFFSET showAvg
+	push		OFFSET revString
+	push		OFFSET numString
+	push		OFFSET average
+	call		WriteVal
 
 	;--------------------
 	; Say goodbye
-	call	CrLf
-	mDisplayString OFFSET lastMsg
-	invoke	ExitProcess,0							; exit to operating system
+	call		CrLf
+	mDisplayString 	OFFSET lastMsg
+	invoke		ExitProcess,0							; exit to operating system
 
 main ENDP
 ;**********************************************************************************************
@@ -172,15 +172,15 @@ main ENDP
 ; Preconditions: 
 ; Postconditions: EAX, EBX, ECX, EDX restored
 ; Receives: [EBP+8] = OFFSET number, [EBP+12] = OFFSET numArray, [EBP+16] = OFFSET numString,
-;			[EBP+20] = OFFSET reprompt, [EBP+24] = OFFSET prompt, [EBP+28] = MAXSIZE
-;			[EBP+32] = OFFSET stringLen, [EBP+36] = ARRAYSIZE, [EBP+40] = OFFSET sum
-;			[EBP+44] = OFFSET average
+;		[EBP+20] = OFFSET reprompt, [EBP+24] = OFFSET prompt, [EBP+28] = MAXSIZE
+;		[EBP+32] = OFFSET stringLen, [EBP+36] = ARRAYSIZE, [EBP+40] = OFFSET sum
+;		[EBP+44] = OFFSET average
 ; Returns: numArray with ARRAYSIZE signed integers, sum SDWORD, average SDWORD
 
 ReadVal PROC
 
 	; Set base, preserve registers
-	push	EBP
+	push		EBP
 	mov		EBP, ESP
 	pushad
 	
@@ -188,39 +188,39 @@ ReadVal PROC
 	mov		ECX, [EBP+36]							; ARRAYSIZE = loop counter
 	mov		EDI, [EBP+12]							; OFFSET numArray
 _getNumber:
-	mGetString [EBP+24], [EBP+16], [EBP+28], [EBP+32]	
+	mGetString 	[EBP+24], [EBP+16], [EBP+28], [EBP+32]	
 
 	; Convert str and validate, reprompt if needed
-	push	[EBP+32]								; OFFSET stringLen
-	push	[EBP+8]									; OFFSET number
-	push	[EBP+20]								; OFFSET reprompt
-	push	[EBP+16]								; OFFSET numString
-	push	[EBP+28]								; MAXSIZE
-	call	Validate
+	push		[EBP+32]							; OFFSET stringLen
+	push		[EBP+8]								; OFFSET number
+	push		[EBP+20]							; OFFSET reprompt
+	push		[EBP+16]							; OFFSET numString
+	push		[EBP+28]							; MAXSIZE
+	call		Validate
 
 	; Add SDWORD to array
 	mov		ESI, [EBP+8]							; OFFSET number (validated)
-	mov		EAX, [ESI]								; move number value to EAX
-	mov		[EDI], EAX								; replace blank array value
+	mov		EAX, [ESI]							; move number value to EAX
+	mov		[EDI], EAX							; replace blank array value
 	add		EDI, TYPE SDWORD						; move to next blank array index
 
 	; Add to sum
 	mov		ESI, [EBP+40]							; OFFSET sum
-	add		[ESI], EAX								; add number to sum
+	add		[ESI], EAX							; add number to sum
 
 	; Loop ARRAYSIZE times
-	loop	_getNumber
+	loop		_getNumber
 
 	; Calculate average
-	push	[EBP+40]								; OFFSET sum
-	push	[EBP+36]								; ARRAYSIZE
-	push	[EBP+44]								; OFFSET average
-	call	CalcAverage
+	push		[EBP+40]							; OFFSET sum
+	push		[EBP+36]							; ARRAYSIZE
+	push		[EBP+44]							; OFFSET average
+	call		CalcAverage
 
 	; Restore registers and return
 	popad
 	pop		EBP
-	ret		40										; de-ref 8*OFFSET+2*constant = 10*DWORD = 40
+	ret		40								; de-ref 8*OFFSET+2*constant = 10*DWORD = 40
 
 ReadVal ENDP
 ;----------------------------------------------------------------------------------------------
@@ -231,7 +231,7 @@ ReadVal ENDP
 ; Preconditions: numString and reprompt is str array, stringlen is int
 ; Postconditions: EAX, EBX, ECX, EDX, ESI, EDI restored
 ; Receives: [EBP+8] = MAXSIZE, [EBP+12] = OFFSET numString, [EBP+16] = OFFSET reprompt,
-;			[EBP+20] = OFFSET number, [EBP+24] = OFFSET stringLen
+;		[EBP+20] = OFFSET number, [EBP+24] = OFFSET stringLen
 ; Returns: OFFSET number contains SDWORD int of input value
 
 Validate PROC
@@ -241,68 +241,68 @@ Validate PROC
 	pushad
 
 	; Set local variables
-	mov		tempNum, 0								; starting value (additive)
-	mov		tempSign, 0								; 1 = negative
+	mov		tempNum, 0							; starting value (additive)
+	mov		tempSign, 0							; 1 = negative
 	
 	; Start validation
 _checkValid:
 	mov		ESI, [EBP+12]							; first char of numString
 	mov		EBX, [EBP+24]							; load OFFSET of str len
-	mov		ECX, [EBX]								; load value of str len into counter
+	mov		ECX, [EBX]							; load value of str len into counter
 
 	; Check if first char = negative sign
-	mov		EAX, 0									; clear entire register for AL
-	mov		AL, 45									; ASCII 45d = negative sign
+	mov		EAX, 0								; clear entire register for AL
+	mov		AL, 45								; ASCII 45d = negative sign
 	cmp		AL, [ESI]
 	je		_setNegative							; jump if negative int
 
 	; Check if first char = positive sign
-	mov		AL, 43									; ASCII 43d = positive sign
+	mov		AL, 43								; ASCII 43d = positive sign
 	cmp		AL, [ESI]
 	jne		_continueValid							; jump if not positive sign
 	inc		ESI
 	cmp		ECX, 1
-	je		_invalidStr								; can't input just a plus sign
+	je		_invalidStr							; can't input just a plus sign
 	dec		ECX
 
 _continueValid:
-	mov		AL, 57									; ASCII 57d = 9
+	mov		AL, 57								; ASCII 57d = 9
 	cmp		AL, [ESI]	
-	jl		_invalidStr								; jump if char > 9
+	jl		_invalidStr							; jump if char > 9
 
-	mov		AL, 48									; ASCII 48d = 0
+	mov		AL, 48								; ASCII 48d = 0
 	cmp		AL, [ESI]
-	jg		_invalidStr								; jump if char < 0
+	jg		_invalidStr							; jump if char < 0
 
 	; Convert ASCII to int digit
 	cld
 	lodsb
-	sub		EAX, 48									; single digit converted
+	sub		EAX, 48								; single digit converted
 	
 	; Calculate to correct tenths place
-	push 	ECX										; preserve ECX for loop
-	dec		ECX										; tenths place = [ECX] - 1
+	push 		ECX								; preserve ECX for loop
+	dec		ECX								; tenths place = [ECX] - 1
 	cmp		ECX, 0
 	jle		_collectDigits
 
 _exponentTen:
 	mov		EBX, 10
 	mul		EBX
-	loop	_exponentTen
+	loop		_exponentTen
 
 _collectDigits:
 	pop		ECX
 	add		tempNum, EAX
 	jo		_invalidStr
 	mov		EAX, 0
-	loop 	_continueValid
+	loop 		_continueValid
 	jmp		_checkSign
 	
 _setNegative:
-	mov		tempSign, 1								; use mem to hold sign
+	mov		tempSign, 1							; use mem to hold sign
 	inc		ESI
 	cmp		ECX, 1
-	je		_invalidStr								; can't input just a minus sign
+	je		_invalidStr							; can't input just a minus sign
 	dec		ECX
 	jmp		_continueValid
 
@@ -310,7 +310,7 @@ _setNegative:
 _invalidStr:
 	mov		tempNum, 0
 	mov		tempSign, 0
-	mGetString [EBP+16], [EBP+12], [EBP+8], [EBP+24]
+	mGetString 	[EBP+16], [EBP+12], [EBP+8], [EBP+24]
 	jmp		_checkValid
 
 	; Set negative sign
@@ -320,7 +320,7 @@ _checkSign:
 	jmp		_finishValid
 _addSign:
 	mov		EAX, tempNum
-	imul	EAX, -1
+	imul		EAX, -1
 	mov		tempNum, EAX
 
 	; Move local variable to global
@@ -331,7 +331,7 @@ _finishValid:
 
 	; Restore registers and return
 	popad
-	ret		20										; de-ref 4 OFFSET + constant = 5 * DWORD = 20
+	ret		20								; de-ref 4 OFFSET + constant = 5 * DWORD = 20
 
 Validate ENDP
 ;----------------------------------------------------------------------------------------------
@@ -347,16 +347,16 @@ Validate ENDP
 CalcAverage PROC
 
 	; Set base, preserve registers
-	push	EBP
+	push		EBP
 	mov		EBP, ESP
 	pushad
 
 	; Divide sum by total elements
 	mov		ESI, [EBP+16]
 	mov		EBX, [EBP+12]							; EBX holds number of elements
-	mov		EAX, [ESI]								; EAX holds sum
+	mov		EAX, [ESI]							; EAX holds sum
 	cdq
-	idiv	EBX
+	idiv		EBX
 
 	; Move to average global variable
 	mov		EDI, [EBP+8]
@@ -365,7 +365,7 @@ CalcAverage PROC
 	; Restore registers and return
 	popad
 	pop		EBP
-	ret		12										; de-ref 2 OFFSET + constant = 3 * DWORD = 12
+	ret		12								; de-ref 2 OFFSET + constant = 3 * DWORD = 12
 
 CalcAverage ENDP
 ;----------------------------------------------------------------------------------------------
@@ -390,14 +390,14 @@ WriteVal PROC
 	mov		tempNum, EAX
 	mov		EDI, [EBP+16]							; OFFSET of revString
 	mov		negativeSign, 0
-	mov		ECX, 0									; counter for reverse loop
+	mov		ECX, 0								; counter for reverse loop
 	
 	; Strip negative sign, if any
 	cmp		tempNum, 0
 	jns		_convertDigits							; skip to digit conversion if positive
 	mov		EAX, tempNum
 	mov		EBX, -1
-	imul	EBX
+	imul		EBX
 	mov		tempNum, EAX
 	mov		negativeSign, 1							; set = negative sign
 
@@ -406,41 +406,41 @@ _convertDigits:
 	mov		EBX, 10
 	mov		EAX, tempNum
 	cdq
-	idiv	EBX											
+	idiv		EBX											
 	mov		tempNum, EAX							; quotient strips last place digit
 	mov		singleDigit, EDX						; remainder holds last place digit
 
 _addToString:
-	mov		EAX, 0									; clear EAX for AL operations
-	mov		AL, BYTE PTR singleDigit				; add last place digit to string
-	add		AL, 48									; ASCII 48d = '0'
+	mov		EAX, 0								; clear EAX for AL operations
+	mov		AL, BYTE PTR singleDigit					; add last place digit to string
+	add		AL, 48								; ASCII 48d = '0'
 	cld
 	stosb
 	inc		ECX
-	cmp		tempNum, 0								; last digit will leave quotient as 0
+	cmp		tempNum, 0							; last digit will leave quotient as 0
 	jne		_convertDigits
 
 	; Add negative sign to string
 	cmp		negativeSign, 0
 	je		_reverseTheStr
-	mov		EAX, 0									; clear EAX for AL operations
-	mov		AL, 45									; ASCII 45d = negative sign
+	mov		EAX, 0								; clear EAX for AL operations
+	mov		AL, 45								; ASCII 45d = negative sign
 	inc		ECX
 	cld
 	stosb
 
 	; Reverse string (from StringManipulator.asm by Prof. Redfield @ Oregon State)
 _reverseTheStr:
-	mov    ESI, [EBP+16]							; OFFSET of revString
-	add    ESI, ECX									; ECX = string length
-	dec    ESI
-	mov    EDI, [EBP+12]							; OFFSET of output_string
+	mov		ESI, [EBP+16]							; OFFSET of revString
+	add		ESI, ECX							; ECX = string length
+	dec		ESI
+	mov		EDI, [EBP+12]							; OFFSET of output_string
 _revLoop:
-    std
-    lodsb
-    cld
-    stosb
-    loop   _revLoop
+   	std
+    	lodsb
+    	cld
+    	stosb
+   	loop		_revLoop
 	;-------------------------------------------------------------------------------
 
 	; Terminate the string
@@ -452,7 +452,7 @@ _revLoop:
 
 	; Restore registers and return
 	popad
-	ret		12										; de-ref OFFSET = 3 * DWORD = 12
+	ret		12								; de-ref OFFSET = 3 * DWORD = 12
 
 WriteVal ENDP
 ;----------------------------------------------------------------------------------------------
