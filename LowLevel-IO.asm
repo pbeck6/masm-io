@@ -92,7 +92,7 @@ revString	BYTE	MAXSIZE+1 DUP(?)
 stringLen	DWORD	?
 numArray	SDWORD	ARRAYSIZE DUP(?)
 number		SDWORD	?
-sum			SDWORD	?
+sum		SDWORD	?
 average		SDWORD	?
 
 
@@ -102,8 +102,8 @@ main PROC
 
 	;--------------------
 	; Introduce the program
-	mDisplayString OFFSET intro1
-	mDisplayString OFFSET intro2
+	mDisplayString 	OFFSET intro1
+	mDisplayString 	OFFSET intro2
 
 	;--------------------
 	; Prompt user to enter numbers
@@ -237,7 +237,7 @@ ReadVal ENDP
 Validate PROC
 
 	; Set base, preserve registers
-	local tempNum:SDWORD, tempSign:BYTE
+	local 		tempNum:SDWORD, tempSign:BYTE
 	pushad
 
 	; Set local variables
@@ -381,7 +381,7 @@ CalcAverage ENDP
 WriteVal PROC
 
 	; Set base, preserve registers
-	local tempNum:SDWORD, singleDigit:SDWORD, negativeSign:BYTE
+	local 		tempNum:SDWORD, singleDigit:SDWORD, negativeSign:BYTE
 	pushad
 
 	; Load number and string
@@ -448,7 +448,7 @@ _revLoop:
 	stosb
 
 	; Display the string
-	mDisplayString [EBP+12]
+	mDisplayString 	[EBP+12]
 
 	; Restore registers and return
 	popad
