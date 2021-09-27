@@ -7,13 +7,13 @@ The assembly program will ask a user for ten signed integers in succession. Afte
 Behind the scenes, the program makes user of data registers, the Irvine library, and its own macros to process the input data.
 
 
-User input in this example is shown in **bold**.
+Program example:
 ```
 Please provide 10 signed decimal integers.  
 Each number needs to be small enough to fit inside a 32 bit register. After you have finished inputting the raw numbers I will display a list of the integers, their sum, and their average value. 
 
-Please enter an signed number: `**`156`**` 
-Please enter an signed number: `**`51d6fd`**` 
+Please enter an signed number: 156
+Please enter an signed number: 51d6fd 
 ERROR: You did not enter a signed number or your number was too big. 
 Please try again: 34 
 Please enter a signed number: -186 
