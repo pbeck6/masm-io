@@ -4,10 +4,11 @@
 
 The assembly program will ask a user for ten signed integers in succession. After each individual number is input, the program validates each number until all ten have been collected. Then, the program displays all ten numbers, their total sum, and the rounded average. 
 
-Behind the scenes, the program makes user of data registers, the Irvine library, and its own macros to process the input data.
+Behind the scenes, the program makes use of data registers, the Irvine library, and its own macros to process the input data.
 
 
-Program example:
+### Program example:
+
 ```
 Please provide 10 signed decimal integers.  
 Each number needs to be small enough to fit inside a 32 bit register. After you have finished inputting the raw numbers I will display a list of the integers, their sum, and their average value. 
