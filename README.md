@@ -11,7 +11,9 @@ Behind the scenes, the program makes use of data registers, the Irvine library, 
 
 ```
 Please provide 10 signed decimal integers.  
-Each number needs to be small enough to fit inside a 32 bit register. After you have finished inputting the raw numbers I will display a list of the integers, their sum, and their average value. 
+Each number needs to be small enough to fit inside a 32 bit register. 
+After you have finished inputting the raw numbers I will display 
+a list of the integers, their sum, and their average value. 
 
 Please enter an signed number: 156
 Please enter an signed number: 51d6fd 
