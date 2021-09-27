@@ -11,7 +11,8 @@ User input in this example is shown in **bold**.
 ```
 Please provide 10 signed decimal integers.  
 Each number needs to be small enough to fit inside a 32 bit register. After you have finished inputting the raw numbers I will display a list of the integers, their sum, and their average value. 
- 
+
+<pre>
 Please enter an signed number: <b>156</b> 
 Please enter an signed number: <b>51d6fd</b> 
 ERROR: You did not enter a signed number or your number was too big. 
@@ -26,6 +27,7 @@ Please enter a signed number: 51
 Please enter a signed number: 0 
 Please enter a signed number: 56 
 Please enter a signed number: 11 
+</pre>
  
 You entered the following numbers: 
 156, 34, -186, -145, 5, 23, 51, 0, 56, 11 
