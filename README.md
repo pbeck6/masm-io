@@ -2,7 +2,7 @@
 
 ## Using String Primitives and Macros in MASM for I/O Functionality
 
-The assembly program will ask a user for ten signed integers in succession. After each individual number is input, the program validates each number until all ten have been collected. Then, the program displays all ten numbers, their total sum, and the rounded average. 
+The Microsoft Macro Assembler(MASM) program will ask a user for ten signed integers in succession. After each individual number is input, the program validates each number until all ten have been collected. Then, the program displays all ten numbers, their total sum, and the rounded average.
 
 Behind the scenes, the program makes use of data registers, the Irvine library, and its own macros to process the input data.
 
